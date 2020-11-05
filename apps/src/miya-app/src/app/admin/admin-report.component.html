@@ -1,0 +1,290 @@
+<!--White banner with button options-->
+
+
+
+
+<div rufId>
+    <ruf-banner rufId="banner_color">
+        <ruf-banner-brand [title]="title" [showLogo]="showLogo"></ruf-banner-brand>
+        <ruf-menubar rufBannerControls>
+
+                
+                <mat-menu #notifmenu="matMenu" class="my-menu">
+                    <button *ngFor="let item of pending; let i = index" class="menuNotif" mat-menu-item (click)="acknowledgeNotif(item.schedTimeId)">
+                            <span>
+                            	<table>
+									<tr>
+										<td><mat-icon>priority_high</mat-icon></td>
+										<td><b>Hi {{this.currentUser.firstName}}! You have pending reminder!</b> [{{item.schedTime | date : 'dd MMM yyyy hh:mm:ss a'}}]</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td><b style="color: red;">Click here to confirm</b></td>
+									</tr>
+								</table>
+                            </span>
+                    </button>
+                </mat-menu>
+
+                
+            
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon style="padding-top: 5px;">more_vert</mat-icon>
+                </button>
+                      <mat-menu #menu="matMenu" fisStyle>
+                        <button mat-menu-item>
+                            <mat-icon>face</mat-icon>
+                            <span>My Profiles</span>
+                        </button>
+                        
+                        <button mat-menu-item
+                        	*ngIf="this.currentUser.role.indexOf('roleCd=MANAGER') > -1"
+                        	(click)="this.router.navigate(['/root-dashboard'])"
+                        >
+                            <mat-icon>trending_up</mat-icon>
+                            <span>Manager Dashboard</span>
+                        </button>
+                        
+                        <button mat-menu-item (click)="emp()"
+                        	*ngIf="this.currentUser.role.indexOf('roleCd=EMPLOYEE') > -1 || this.currentUser.role.indexOf('roleCd=ADMIN') > -1"
+                        >
+                            <mat-icon>supervised_user_circle</mat-icon>
+                            <span>Employee Dashboard</span>
+                        </button>
+                        
+                        <button mat-menu-item  [matMenuTriggerFor]="admin"
+                        	*ngIf="this.currentUser.role.indexOf('roleCd=ADMIN') > -1"
+                        >
+                            <mat-icon>settings</mat-icon>
+                            <span>Administration</span>
+                        </button>
+                        
+                        <mat-menu #admin="matMenu">
+						  	<button mat-menu-item (click)="adduser()">
+							    <mat-icon>perm_identity</mat-icon>
+							    <span>User Management</span>
+							</button>
+							<button mat-menu-item (click)="this.router.navigate(['/admin-config'])">
+							    <mat-icon>build</mat-icon>
+							    <span>Configuration</span>
+							</button>
+						</mat-menu>
+                        
+                        <button mat-menu-item (click)="logout()">
+                            <mat-icon>exit_to_app</mat-icon>
+                            <span>Logout</span>
+                        </button>
+                      </mat-menu>
+        </ruf-menubar>
+    </ruf-banner>
+    
+        <br>
+        <div fxFlexAlign="stretch">
+
+        
+        <mat-card class="chartCard">
+          
+            <mat-toolbar color="primary">
+				  <span>Administration > Reports</span>
+				</mat-toolbar>
+				
+				<div class="container mat-elevation-z8">
+				
+			
+			<form class="example-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+				
+				<table>
+					
+					<tr>
+						<td style="text-align: left;font-size: 18px;font-weight: 500;padding-top: 20px;padding-left: 20px;">
+							<mat-label>Employee : </mat-label>
+						</td>
+						<td style="padding-right: 60px;padding-top: 20px;">
+							<div class="form">
+								<mat-form-field fisStyle>
+									<mat-select class="form-control" placeholder="From" formControlName="emp" name="emp" multiple>
+										<mat-option *ngFor="let user of users" [value]="user.user_id + '-~-' +user.disp">
+										  {{ user.disp }}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</td>
+						<td style="padding-top: 20px;">
+						</td>
+					</tr>
+					<tr style="padding-top: 40px;">
+						<td style="text-align: left;font-size: 18px;font-weight: 500;padding-left: 20px;">
+							<mat-label>Manager : </mat-label>
+						</td>
+						<td style="padding-right: 60px;">
+							<div class="form">
+								<mat-form-field fisStyle>
+									<mat-select class="form-control" placeholder="From" formControlName="mgr" name="mgr" multiple>
+										<mat-option *ngFor="let manager of managers" [value]="manager.user_id + '-~-' +manager.disp">
+										  {{ manager.disp }}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</td>
+						<td>
+						</td>
+					</tr>
+					<tr style="padding-top: 40px;">
+						<td style="text-align: left;font-size: 18px;font-weight: 500;padding-left: 20px;">
+							<mat-label>Schedule Date : </mat-label>
+						</td>
+						<td style="padding-right: 60px;">
+							<div class="form">
+								<mat-form-field fisStyle>
+									<mat-label>From</mat-label>
+										<input matInput #input class="form-control" [matDatepicker]="scheddatefrom" placeholder="From" formControlName="scheddatefrom" name="scheddatefrom" >
+											<mat-datepicker-toggle matSuffix [for]="scheddatefrom"></mat-datepicker-toggle>
+											<mat-datepicker #scheddatefrom></mat-datepicker>
+								</mat-form-field>
+							</div>
+						</td>
+						<td>
+							<div class="form">
+								<mat-form-field fisStyle>
+									<mat-label>To</mat-label>
+										<input matInput #input class="form-control" [matDatepicker]="scheddateto" placeholder="To" formControlName="scheddateto" name="scheddateto" >
+											<mat-datepicker-toggle matSuffix [for]="scheddateto"></mat-datepicker-toggle>
+											<mat-datepicker #scheddateto></mat-datepicker>
+								</mat-form-field>
+							</div>
+						</td>
+					</tr>
+					<tr style="padding-top: 40px;">
+						<td style="text-align: left;font-size: 18px;font-weight: 500;padding-left: 20px;">
+							<mat-label>Status : </mat-label>
+						</td>
+						<td style="padding-right: 60px;">
+							<div class="form">
+								<mat-form-field fisStyle>
+									<mat-select class="form-control" placeholder="Status" formControlName="status" name="status" multiple >
+										<mat-option value="STARTED">STARTED</mat-option>
+										<mat-option value="ENDED">ENDED</mat-option>
+										<mat-option value="PENDING">PENDING</mat-option>
+										<mat-option value="CONFIRMED">CONFIRMED</mat-option>
+										<mat-option value="MISSED">MISSED</mat-option>
+										<mat-option value="MISSED(END-SHIFT)">MISSED(END-SHIFT)</mat-option>
+										<mat-option value="ENDED(UNDERTIME)">ENDED(UNDERTIME)</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</td>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;font-size: 18px;font-weight: 500;padding-top: 8px;padding-left: 20px;">
+							<mat-label>Report Type : </mat-label>
+						</td>
+						<td style="padding-right: 60px;padding-top: 8px;">
+							<div class="form">
+								<mat-form-field fisStyle>
+									<mat-select class="form-control" placeholder="Type" formControlName="type" name="type"  >
+										<mat-option value="Default">Default</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</td>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;font-size: 18px;font-weight: 500;padding-top: 20px;padding-left: 20px;">
+							<mat-label>Format : </mat-label>
+						</td>
+						<td style="padding-right: 60px;padding-top: 20px;">
+							<div class="form">
+								<mat-radio-group aria-label="Select an option" formControlName="format" name="format" >
+								  <mat-radio-button style="padding-right: 60px;" value="PDF" checked>PDF</mat-radio-button>
+								  <mat-radio-button value="XLS">XLS</mat-radio-button>
+								</mat-radio-group>
+							</div>
+						</td>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-top: 40px;text-left: center;padding-left: 20px;">
+							<span><button id="login" mat-button color="primary" type="submit" fisStyle>GENERATE</button></span>
+							<span style="padding-left: 20px;"><button id="login" mat-button color="primary" (click)="reset()" type="button" fisStyle>RESET</button></span>
+						</td>
+						<td>
+							
+						</td>
+						<td>
+							
+						</td>
+					</tr>
+					
+					<tr>
+						<td style="padding-bottom: 20px;">
+							
+						</td>
+						<td>
+							
+						</td>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+			</form>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+            </div>
+            
+        </mat-card>
+        
+    
+
+
+
+
+
+
+
+      <!--
+      <div fxFlex="flex" fxFlexOffset="4">
+          <div fxLayout="column">
+            
+              <mat-card title="Calendar" class="notifCard">
+                  
+                  <p>Simple datepicker</p>
+                  <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next" (select)="retrieveShiftNotif()"></ngb-datepicker>
+                  
+              </mat-card>
+              
+          </div>
+      </div>
+      -->
+
+
+
+
+    </div>
+
+</div>
+

@@ -1,0 +1,217 @@
+<!-- White banner with button options -->
+
+
+
+
+<div rufId class="container">
+    <ruf-banner rufId="banner_color">
+        <ruf-banner-brand [title]="title" [showLogo]="showLogo"></ruf-banner-brand>
+        <ruf-menubar rufBannerControls>
+
+                
+        		<button mat-icon-button title="Alert Sound: OFF" *ngIf="this.userPreferencesMap.get('ALERT_SOUND_ENABLE') == 'N'" (click)="setAlarmSound('Y')">
+                     <mat-icon >volume_off</mat-icon>
+                </button>
+                <button mat-icon-button title="Alert Sound: ON"  *ngIf="this.userPreferencesMap.get('ALERT_SOUND_ENABLE') == 'Y'" (click)="setAlarmSound('N')">
+                     <mat-icon >volume_up</mat-icon>
+                </button>
+                <button mat-icon-button [matMenuTriggerFor]="notifmenu" (click)="getPending();" aria-label="Example icon-button with a menu">
+                    <mat-icon matBadge="{{badgeCounter}}">notifications</mat-icon>
+                </button>
+                <mat-menu #notifmenu="matMenu" class="my-menu">
+                <!--
+                    <button *ngFor="let item of pending; let i = index" class="menuNotif" mat-menu-item (click)="acknowledgeNotif(item.schedTimeId)" style="height: 250px;">
+                            <span>
+                            	<table>
+									<tr>
+										<td><mat-icon>priority_high</mat-icon></td>
+										<td><b>Hi {{this.currentUser.firstName}}! You have pending reminder!</b> [{{item.schedTime | date : 'dd MMM yyyy hh:mm:ss a'}}]</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td><b style="color: red;">Click here to confirm</b></td>
+									</tr>
+								</table>
+                            </span>
+                    </button>
+
+                -->
+                <table *ngFor="let item of pending; let i = index" class="menuNotif" mat-menu-item (click)="acknowledgeNotif(item.schedTimeId)" style="height: 130px;">
+                    <tr style="text-align: left;">
+                        <th style="padding-top: 10px; font-size: medium;"><span><mat-icon>priority_high</mat-icon></span>Sheldon</th>
+                        <th style="padding-top: 10px;">{{item.schedTime | date : 'dd MMM yyyy hh:mm:ss a'}}</th>
+                    </tr>
+                    <tr>
+                        <td style="font-size: small; padding-top: 10px;"><b>Hi {{this.currentUser.firstName}}!</b></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 5px;">You have pending reminder!</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 10px;"><b style="color: red; font-size: small;">Click here to confirm</b></td>
+                    </tr>
+                </table>   
+
+                </mat-menu>
+
+                
+            
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon style="padding-top: 5px;">more_vert</mat-icon>
+                </button>
+                      <mat-menu #menu="matMenu" fisStyle>
+                        <button mat-menu-item>
+                            <mat-icon>face</mat-icon>
+                            <span>My Profiles</span>
+                        </button>
+                        
+                        <button mat-menu-item
+                        	*ngIf="this.currentUser.role.indexOf('roleCd=MANAGER') > -1"
+                        	(click)="this.router.navigate(['/root-dashboard'])"
+                        >
+                            <mat-icon>trending_up</mat-icon>
+                            <span>Manager Dashboard</span>
+                        </button>
+                        
+                        <button mat-menu-item  [matMenuTriggerFor]="admin"
+                        	*ngIf="this.currentUser.role.indexOf('roleCd=ADMIN') > -1"
+                        >
+                            <mat-icon>settings</mat-icon>
+                            <span>Administration</span>
+                        </button>
+                        
+                        <mat-menu #admin="matMenu">
+						  	<button mat-menu-item (click)="adduser()">
+							    <mat-icon>perm_identity</mat-icon>
+							    <span>User Management</span>
+							</button>
+							<button mat-menu-item (click)="config()">
+							    <mat-icon>build</mat-icon>
+							    <span>Configuration</span>
+							</button>
+							<button mat-menu-item (click)="report()">
+							    <mat-icon>assignment</mat-icon>
+							    <span>Reports</span>
+							</button>
+						</mat-menu>
+                        
+                        <button mat-menu-item (click)="logout()">
+                            <mat-icon>exit_to_app</mat-icon>
+                            <span>Logout</span>
+                        </button>
+                      </mat-menu>
+        </ruf-menubar>
+    </ruf-banner>
+    
+        <br>
+        <div fxFlexAlign="stretch" class="sub-container">
+
+        
+        <mat-card class="chartCard">
+            <mat-card-title>
+              My Shift Schedule
+            </mat-card-title>
+
+            <mat-card-title>
+                <table style="width: 100%;">
+                    <tr>
+                    <td style="text-align: left;">
+                        <span>
+                            <button mat-stroked-button color="warn" fisStyle *ngIf="hasShift" (click)="endShift()">End Shift</button>
+                            <button mat-stroked-button color="warn" fisStyle *ngIf="!hasShift" (click)="createNewShift()" >New Shift</button>&nbsp;
+                            <button mat-stroked-button color="warn" fisStyle 
+                            *ngIf="hasShift && this.userPreferencesMap.get('BREAK_TIME_DISABLE') == 'Y'"
+                            (click)="onBreak('N')" 
+                            [disabled]="breakTimeInMins<=0" >Take a Break</button>
+                            <button mat-stroked-button color="warn" fisStyle 
+                            *ngIf="hasShift && this.userPreferencesMap.get('BREAK_TIME_DISABLE') == 'N'"
+                            (click)="onBreak('Y')" 
+                            [disabled]="breakTimeInMins<=0">Resume Work</button>&nbsp;
+                            <span *ngIf="hasShift" style="font-size:15px">
+                                Remaining Breaks: {{remainingBreakTime}}
+                            </span>
+                         </span>      
+                    </td>
+                    <td style="text-align: right;">
+                        <span>
+                            <button mat-icon-button (click)="backShift()" 
+                                [disabled]="selectedShiftSchedId==minShiftSchedId"
+                                title="back shift">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                            </button>
+                        </span>     
+                        <span>  
+                            <button mat-icon-button (click)="goToCurrentShift()" 
+                                [disabled]="selectedShiftSchedId == currentShiftSchedId" 
+                                *ngIf="hasShift"
+                                title="current shift">
+                            <mat-icon>today</mat-icon>
+                            </button>
+                        </span>   
+                        <span>
+                            <button mat-icon-button (click)="forwardShift()" 
+                                [disabled]="selectedShiftSchedId == maxShiftSchedId 
+                                    || selectedShiftSchedId == currentShiftSchedId" 
+                                title="forward shift">
+                            <mat-icon>keyboard_arrow_right</mat-icon>
+                            </button>
+                        </span>
+                    </td>
+                    </tr>
+                </table>
+            </mat-card-title>
+            
+            <mat-card-content>
+              <div class="grid-selection">
+                <ngx-datatable class="material" [columnMode]="'force'" [rows]="displayRows"
+                [footerHeight]="0"
+                [rowHeight]="50"
+                [headerHeight]="50"
+                [scrollbarV]="true"
+                style="border-style: solid;">
+                    <ngx-datatable-column name="Date" [width]="25" [sortable]="false"></ngx-datatable-column>
+                    <ngx-datatable-column name="Time" [width]="15" [sortable]="false"></ngx-datatable-column>
+                    <ngx-datatable-column name="Status" [width]="35" [sortable]="false">
+                    	<ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    		<button 
+                        		mat-icon-button 
+                        		(click)="acknowledgeNotifInGrid('reason', rowIndex)"
+                        		*ngIf="this.displayRows[rowIndex].status=='PENDING' && (selectedShiftSchedId==0 || selectedShiftSchedId==currentShiftSchedId)"
+                        		[disabled]="!hasShift"
+                        		style="background: none!important;
+										  border: none;
+										  padding: 0!important;
+										  /*optional*/
+										  font-family: arial, sans-serif;
+										  /*input has OS specific font-family*/
+										  color: #069;
+										  text-decoration: underline;
+										  cursor: pointer;"
+                        	>
+                        		<span>{{ getStatus(rowIndex)  }}</span>
+			                </button>
+			                <span *ngIf="this.displayRows[rowIndex].status!='PENDING'">{{ getStatus(rowIndex)  }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Reason" [sortable]="false">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                            <input
+                                *ngIf="(this.displayRows[rowIndex].status=='MISSED' || 
+                                        this.displayRows[rowIndex].status=='MISSED(END-SHIFT)' ||
+                                        this.displayRows[rowIndex].status=='ENDED(UNDERTIME)')" 
+                                (blur)="updateValue($event, 'reason', rowIndex)" 
+                                [disabled]="(!hasShift && this.displayRows[rowIndex].status!='ENDED(UNDERTIME)') || 
+                                            (selectedShiftSchedId!=0 && selectedShiftSchedId!=currentShiftSchedId)"
+                                type="text" 
+                                [value]="value" 
+                                style="width:95%"
+                            />
+                        </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+              </div>
+            </mat-card-content>            
+        </mat-card>
+    </div>
+</div>
+

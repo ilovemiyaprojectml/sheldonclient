@@ -1,0 +1,20 @@
+@import 'node_modules/@ruf/theming/styles/theming/theming';
+@import 'node_modules/@ruf/shell/src/banner/banner.theme';
+// include component theme file
+
+// a convenience mixin that aggregates all of your component theme mixins
+
+
+
+
+
+@mixin example-theme($theme) {
+  @include ruf-banner-theme($theme);
+  
+}
+
+@mixin example-typography($config) {
+  @include ruf-banner-typography($config);
+}
+
+

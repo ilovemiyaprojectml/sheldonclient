@@ -1,0 +1,142 @@
+
+<img src="../../assets/loginBackgrounds/login-bkgd.jpg">
+<ruf-card rufId="simpleCard">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<form class="example-form" [formGroup]="loginForm"
+	(ngSubmit)="onSubmit()">
+	
+	<table>
+		<mat-card-header>
+			<mat-card-title style="color:#3888bc" [style.display]="dispchange == 'none' ? 'block': 'none'">User Login</mat-card-title>
+			<mat-card-title style="color:#3888bc" [style.display]="dispchange">Change Password</mat-card-title>
+		</mat-card-header>
+		
+		<hr>
+		<tr>
+			<td><mat-form-field fisStyle> <mat-label>Username</mat-label>
+				<input type="text" matInput formControlName="username" required>
+				</mat-form-field></td>
+		</tr>
+		<tr>
+			<td><mat-form-field fisStyle> <mat-label>Password</mat-label>
+				<input matInput type="password" formControlName="password" required>
+				</mat-form-field></td>
+		</tr>
+		<tr [style.display]="dispchange">
+			<td>
+			
+				<mat-form-field fisStyle>
+				<mat-label>New Password</mat-label>
+				<input matInput type="password" formControlName="newpassword" required>
+				</mat-form-field>
+				
+				<div>
+					<label style="color:red;font-size: 12px;" *ngIf="this.loginForm.controls['newpassword'].hasError('required') ||
+		                this.loginForm.controls['newpassword'].hasError('minlength')">
+		              Must be at least 8 characters!
+		              </label>
+	            </div>
+	            
+	            <div>
+					<label style="color:red;font-size: 12px;" *ngIf="this.loginForm.controls['newpassword'].hasError('required') ||
+		                this.loginForm.controls['newpassword'].hasError('hasNumber')">
+		              Must contain at least 1 number!
+		            </label>
+	            </div>
+	            
+	            <div>
+					<label style="color:red;font-size: 12px;" *ngIf="this.loginForm.controls['newpassword'].hasError('required') ||
+		                this.loginForm.controls['newpassword'].hasError('hasCapitalCase')">
+		              Must contain at least 1 Letter in Capital Case!
+		            </label>
+	            </div>
+	            
+	            <div>
+					<label style="color:red;font-size: 12px;" *ngIf="this.loginForm.controls['newpassword'].hasError('required') ||
+		                this.loginForm.controls['newpassword'].hasError('hasSmallCase')">
+		              Must contain at least 1 Letter in Small Case!
+		            </label>
+	            </div>
+	            
+	            <div>
+					<label style="color:red;font-size: 12px;" *ngIf="this.loginForm.controls['newpassword'].hasError('required') ||
+		                this.loginForm.controls['newpassword'].hasError('hasSpecialCharacters')">
+		              Must contain at least 1 Special Character!
+		            </label>
+	            </div>
+			</td>
+		</tr>
+		<tr [style.display]="dispchange">
+			<td><mat-form-field fisStyle> <mat-label>Confirm New Password</mat-label>
+				<input matInput type="password" formControlName="confirmnewpassword" required>
+				</mat-form-field></td>
+		</tr>
+		<tr style="text-align: left;" [style.display]="dispchange == 'none' ? 'block': 'none'">
+			<td>
+				<span><button (click)="resetpassword($event)" type="button" class="like-anchor" id="resetpassword">Reset Password</button></span>
+			</td>
+		</tr>
+		<tr style="text-align: left;" [style.display]="dispchange == 'none' ? 'block': 'none'">
+			<td>
+				<span><button (click)="changepassword($event)" type="button" class="like-anchor" id="changepassword">Change Password</button></span>
+			</td>
+		</tr>
+		<tr style="text-align: right;">
+			<td>
+				<span style="margin: 5px;" [style.display]="dispchange == 'none' ? 'inline': 'none'"><button id="login" mat-button color="primary" type="submit" fisStyle>LOGIN</button></span>
+				<span style="margin: 5px;" [style.display]="dispchange == 'none' ? 'none': 'inline'"><button (click)="proceedchangepassword($event)" type="button" class="mat-button mat-primary" id="proceedchangepassword" fisStyle>PROCEED</button></span>
+				<span style="margin: 5px;" [style.display]="dispchange == 'none' ? 'none': 'inline'"><button (click)="cancelchangepassword($event)" type="button" class="mat-button mat-primary" id="cancelchangepassword" fisStyle>CANCEL</button></span>
+			</td>
+		</tr>
+	</table>
+	
+	
+<div id="id01" class="cdk-overlay-container" [style.display]="disp">
+	<div class="cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing"></div>
+	<div class="cdk-global-overlay-wrapper" dir="ltr" style="justify-content: center; align-items: center;">
+		<div id="cdk-overlay-7" class="cdk-overlay-pane custom-overlay-pane-class" style="max-width: 80vw; pointer-events: auto; position: static;">
+			<div tabindex="0" class="cdk-visually-hidden cdk-focus-trap-anchor" aria-hidden="true"></div>
+				<div class="mat-dialog-container">
+					<table>
+						<mat-card-header> <mat-card-title
+							style="color:#3888bc">Reset Password</mat-card-title> </mat-card-header>
+						<hr>
+						<tr>
+							<td><mat-form-field fisStyle> <mat-label>Email</mat-label>
+								<input type="text" matInput formControlName="email" required>
+								</mat-form-field></td>
+						</tr>
+						<tr style="text-align: right;">
+							<td>
+								<span style="margin: 5px;"><button (click)="proceedresetpassword($event)" type="button" class="mat-button mat-primary" id="proceedresetpassword" fisStyle>PROCEED</button></span>
+								<span style="margin: 5px;"><button (click)="cancelresetpassword($event)" type="button" class="mat-button mat-primary" id="cancelresetpassword" fisStyle>CANCEL</button></span>
+							
+							</td>
+						</tr>
+					</table>
+				</div>
+			<div tabindex="0" class="cdk-visually-hidden cdk-focus-trap-anchor" aria-hidden="true"></div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+</form>
+</ruf-card>

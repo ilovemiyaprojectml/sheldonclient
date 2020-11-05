@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import 'node_modules/@ruf/theming/styles/theming/theming';
+@import 'node_modules/@ruf/ngx-datatable/styles/all-theme.scss';
+@import 'node_modules/@ruf/ngx-datatable/styles/_ngx-datatable.structure.scss';
+
+// a convenience mixin that aggregates all of your component theme mixins
+@mixin example-theme($theme) {
+  @include ruf-ngx-datatable-theme($theme);
+  demo-ngx-table-basic {
+    @include ruf-ngx-datatable();
+  }
+}
+
+
+@mixin example-typography($config) {
+  demo-ngx-table-basic {
+  }
+}
+
+
+::ng-deep .my-menu {
+    width: auto;
+}
+
+
+::ng-deep.mat-menu-panel {
+  max-width: none !important;
+}
+
+
+.chartCard{
+  margin-left: 10px;
+  margin-right: 10px;
+  //height: calc(73vh);
+}
+
+ngx-datatable{
+  height: 60vh;
+  max-height: 60vh;
+  //overflow-y: hidden;
+}
+
+
+.menuNotif{
+  line-height: 15px;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  height: auto;
+  font-size: 12px;
+
+}
+
+
+// ::ng-deep button.mat-menu-item {
+//   -webkit-user-select: none;
+//   -moz-user-select: none;
+//   -ms-user-select: none;
+//   user-select: none;
+//   cursor: pointer;
+//   outline: 0;
+//   border: none;
+//   -webkit-tap-highlight-color: transparent;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   display: block;
+//   /** set line height to desired height */
+//   line-height: 50px;
+//   /** set height to auto */
+//   height: auto;
+//   padding: 0 16px;
+//   text-align: left;
+//   text-decoration: none;
+//   max-width: 100%;
+//   position: relative;
+// }
+
+
+

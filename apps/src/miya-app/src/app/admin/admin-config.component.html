@@ -1,0 +1,260 @@
+<!--White banner with button options-->
+
+
+
+
+<div rufId>
+    <ruf-banner rufId="banner_color">
+        <ruf-banner-brand [title]="title" [showLogo]="showLogo"></ruf-banner-brand>
+        <ruf-menubar rufBannerControls>
+
+                
+                <mat-menu #notifmenu="matMenu" class="my-menu">
+                    <button *ngFor="let item of pending; let i = index" class="menuNotif" mat-menu-item (click)="acknowledgeNotif(item.schedTimeId)">
+                            <span>
+                            	<table>
+									<tr>
+										<td><mat-icon>priority_high</mat-icon></td>
+										<td><b>Hi {{this.currentUser.firstName}}! You have pending reminder!</b> [{{item.schedTime | date : 'dd MMM yyyy hh:mm:ss a'}}]</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td><b style="color: red;">Click here to confirm</b></td>
+									</tr>
+								</table>
+                            </span>
+                    </button>
+                </mat-menu>
+
+                
+            
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon style="padding-top: 5px;">more_vert</mat-icon>
+                </button>
+                      <mat-menu #menu="matMenu" fisStyle>
+                        <button mat-menu-item>
+                            <mat-icon>face</mat-icon>
+                            <span>My Profiles</span>
+                        </button>
+                        
+                        <button mat-menu-item
+                        	*ngIf="this.currentUser.role.indexOf('roleCd=MANAGER') > -1"
+                        	(click)="this.router.navigate(['/root-dashboard'])"
+                        >
+                            <mat-icon>trending_up</mat-icon>
+                            <span>Manager Dashboard</span>
+                        </button>
+                        
+                        <button mat-menu-item (click)="this.router.navigate(['/user-dashboard'])"
+                        	*ngIf="this.currentUser.role.indexOf('roleCd=EMPLOYEE') > -1 || this.currentUser.role.indexOf('roleCd=ADMIN') > -1"
+                        >
+                            <mat-icon>supervised_user_circle</mat-icon>
+                            <span>Employee Dashboard</span>
+                        </button>
+                        
+                        <button mat-menu-item  [matMenuTriggerFor]="admin"
+                        	*ngIf="this.currentUser.role.indexOf('roleCd=ADMIN') > -1"
+                        >
+                            <mat-icon>settings</mat-icon>
+                            <span>Administration</span>
+                        </button>
+                        
+                        <mat-menu #admin="matMenu">
+							<button mat-menu-item (click)="adduser()">
+							    <mat-icon>perm_identity</mat-icon>
+							    <span>User Management</span>
+							</button>
+							<button mat-menu-item (click)="this.router.navigate(['/admin-report'])">
+							    <mat-icon>assignment</mat-icon>
+							    <span>Reports</span>
+							</button>
+						</mat-menu>
+                        
+                        <button mat-menu-item (click)="logout()">
+                            <mat-icon>exit_to_app</mat-icon>
+                            <span>Logout</span>
+                        </button>
+                      </mat-menu>
+        </ruf-menubar>
+    </ruf-banner>
+    
+        <br>
+        <div fxFlexAlign="stretch">
+
+        
+        <mat-card class="chartCard">
+          
+        
+				<mat-toolbar color="primary">
+				  <span>Administration > Configuration</span>
+				</mat-toolbar>
+				
+				<div class="container mat-elevation-z8">
+				
+					<table style="width:100%">
+						<tr>
+							<td style="padding-left: 20px;">
+								<div class="form">
+									<mat-form-field floatPlaceholder="never" color="accent">
+									  <input matInput #filter placeholder="Filter system codes">
+									</mat-form-field>
+								</div>
+							</td>
+							<td style="text-align:right;padding-right: 20px;">
+								<div>
+									Reload data:
+								  <button mat-icon-button (click)="refresh()">
+									<mat-icon>refresh</mat-icon>
+								  </button>
+								</div>
+							</td>
+						</tr>
+					</table>
+				
+				  
+				
+				  <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+				    ng update @angular/cli @angular/core
+				    <!--- Note that these columns can be defined in any order.
+				          The actual rendered columns are set as a property on the row definition" -->
+				
+				    <!-- ID Column -->
+					<ng-container matColumnDef="code_id">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Code ID</mat-header-cell>
+				      <mat-cell *matCellDef="let row" >{{row.code_id}}</mat-cell>
+				    </ng-container>
+					
+				    <ng-container matColumnDef="code_name">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Code Name</mat-header-cell>
+				      <mat-cell *matCellDef="let row" >{{row.code_name}}</mat-cell>
+				    </ng-container>
+				
+				    <ng-container matColumnDef="desc">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+				      <mat-cell *matCellDef="let row"> {{row.desc}}</mat-cell>
+				    </ng-container>
+					
+					<ng-container matColumnDef="category">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+				      <mat-cell *matCellDef="let row"> {{row.category}}</mat-cell>
+				    </ng-container>
+					
+					 <ng-container matColumnDef="value_1">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Value 1</mat-header-cell>
+				      <mat-cell *matCellDef="let row"> {{row.value_1}}</mat-cell>
+				    </ng-container>
+					
+					<ng-container matColumnDef="value_2">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Value 2</mat-header-cell>
+				      <mat-cell *matCellDef="let row"> {{row.value_2}}</mat-cell>
+				    </ng-container>
+					
+					<ng-container matColumnDef="value_3">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Value 3</mat-header-cell>
+				      <mat-cell *matCellDef="let row"> {{row.value_3}}</mat-cell>
+				    </ng-container>
+				    
+				    <ng-container matColumnDef="value_4">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Value 4</mat-header-cell>
+				      <mat-cell *matCellDef="let row"> {{row.value_4}}</mat-cell>
+				    </ng-container>
+					
+					<!--<ng-container matColumnDef="date_created">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Date Created</mat-header-cell>
+				      <mat-cell *matCellDef="let row"> {{row.date_created}}</mat-cell>
+				    </ng-container>
+					
+					<ng-container matColumnDef="date_last_updated">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Date Last Updated</mat-header-cell>
+				      <mat-cell *matCellDef="let row"> {{row.date_last_updated}}</mat-cell>
+				    </ng-container>
+				
+				    <ng-container matColumnDef="created_by">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Created By</mat-header-cell>
+				      <mat-cell *matCellDef="let row"> {{row.created_by}}</mat-cell>
+				    </ng-container>
+					
+					<ng-container matColumnDef="last_updated_by">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated By</mat-header-cell>
+				      <mat-cell *matCellDef="let row"> {{row.last_updated_by}}</mat-cell>
+				    </ng-container>-->
+					
+					<ng-container matColumnDef="is_active">
+				      <mat-header-cell *matHeaderCellDef mat-sort-header>Is Active?</mat-header-cell>
+				      <mat-cell *matCellDef="let row"> {{row.is_active}}</mat-cell>
+				    </ng-container>
+				
+				    <!-- actions -->
+				    <ng-container matColumnDef="actions">
+				      <mat-header-cell *matHeaderCellDef>
+				        <button mat-icon-button color="primary" (click)="addNew()">
+				          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+				        </button>
+				      </mat-header-cell>
+				
+				      <mat-cell *matCellDef="let row; let i=index;">
+					  
+						<button mat-icon-button color="primary" (click)="startBrowse(i, row.code_id, row.code_name, row.desc, row.category, row.value_1, row.value_2, row.value_3, row.value_4, row.date_created, row.date_last_updated, row.created_by, row.last_updated_by, row.is_active)">
+				          <mat-icon aria-label="Browse">receipt</mat-icon>
+				        </button>
+					  
+				        <button mat-icon-button color="primary" (click)="startEdit(i, row.code_id, row.code_name, row.desc, row.category, row.value_1, row.value_2, row.value_3, row.value_4, row.date_created, row.date_last_updated, row.created_by, row.last_updated_by, row.is_active)">
+				          <mat-icon aria-label="Edit">edit</mat-icon>
+				        </button>
+				
+				        <button mat-icon-button color="primary" (click)="deleteItem(i, row.code_id, row.code_name, row.desc, row.category, row.value_1, row.value_2, row.value_3, row.value_4, row.date_created, row.date_last_updated, row.created_by, row.last_updated_by, row.is_active)">
+				          <mat-icon aria-label="Delete">delete</mat-icon>
+				        </button>
+				      </mat-cell>
+				    </ng-container>
+				
+				    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+				  </mat-table>
+				
+				
+				  <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+				    No results
+				  </div>
+				
+				  <mat-paginator #paginator
+				                 [length]="dataSource.filteredData.length"
+				                 [pageIndex]="0"
+				                 [pageSize]="10"
+				                 [pageSizeOptions]="[5, 10, 25, 100]">
+				  </mat-paginator>
+				</div>
+
+            
+        </mat-card>
+        
+    
+
+
+
+
+
+
+
+      <!--
+      <div fxFlex="flex" fxFlexOffset="4">
+          <div fxLayout="column">
+            
+              <mat-card title="Calendar" class="notifCard">
+                  
+                  <p>Simple datepicker</p>
+                  <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next" (select)="retrieveShiftNotif()"></ngb-datepicker>
+                  
+              </mat-card>
+              
+          </div>
+      </div>
+      -->
+
+
+
+
+    </div>
+
+</div>
+

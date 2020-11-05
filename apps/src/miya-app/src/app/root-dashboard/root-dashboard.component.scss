@@ -1,0 +1,60 @@
+// _example.theme.scss
+
+@import 'node_modules/@ruf/theming/styles/theming/theming';
+@import 'node_modules/@ruf/shell/src/dynamic-menubar/dynamic-menubar.theme';
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import 'node_modules/@ruf/theming/styles/theming/theming';
+@import 'node_modules/@ruf/ngx-datatable/styles/all-theme.scss';
+@import 'node_modules/@ruf/ngx-datatable/styles/_ngx-datatable.structure.scss';
+
+
+// a convenience mixin that aggregates all of your component theme mixins
+@mixin example-theme($theme) {
+  @include ruf-dynamic-menubar-theme($theme);
+  @include ruf-ngx-datatable-theme($theme);
+  demo-ngx-table-basic {
+    @include ruf-ngx-datatable();
+  }
+}
+
+@mixin example-typography($config) {
+  demo-dynamic-menubar-tabs {
+  }
+
+  demo-ngx-table-basic {
+  }
+}
+
+
+
+::ng-deep .my-menu {
+    width: auto;
+}
+
+
+::ng-deep.mat-menu-panel {
+  max-width: none !important;
+}
+
+
+.chartCard{
+  margin-left: 10px;
+  margin-right: 10px;
+  //height: calc(73vh);
+}
+
+ngx-datatable{
+  height: 60vh;
+  max-height: 60vh;
+  //overflow-y: hidden;
+}
+
+
+.menuNotif{
+  line-height: 15px;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  height: auto;
+  font-size: 12px;
+
+}

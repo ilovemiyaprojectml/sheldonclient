@@ -1,0 +1,7 @@
+
+/* You can add global styles to this file, and also import other style files */
+@import './miya-app-theme.scss';
+@import './node_modules/@ruf/ngx-datatable/styles/ngx-datatable.structure.scss';
+
+@include ruf-ngx-datatable();
+

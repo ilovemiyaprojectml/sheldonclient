@@ -1,0 +1,171 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import 'node_modules/@ruf/theming/styles/theming/theming';
+@import 'node_modules/@ruf/ngx-datatable/styles/all-theme.scss';
+@import 'node_modules/@ruf/ngx-datatable/styles/_ngx-datatable.structure.scss';
+
+// a convenience mixin that aggregates all of your component theme mixins
+@mixin example-theme($theme) {
+  @include ruf-ngx-datatable-theme($theme);
+  demo-ngx-table-basic {
+    @include ruf-ngx-datatable();
+  }
+}
+
+@mixin example-typography($config) {
+  demo-ngx-table-basic {
+  }
+}
+
+::ng-deep .my-menu {
+    width: auto;
+}
+
+::ng-deep.mat-menu-panel {
+  max-width: none !important;
+}
+
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1){
+  flex: 0 0 6%;
+}
+
+.mat-cell:nth-child(2),
+.mat-header-cell:nth-child(2){
+  flex: 0 0 18%;
+}
+
+
+.mat-cell:nth-child(4),
+.mat-header-cell:nth-child(4){
+  flex: 0 0 14%;
+}
+
+.mat-cell:nth-child(5),
+.mat-header-cell:nth-child(5){
+  flex: 0 0 8%;
+}
+
+.mat-cell:nth-child(6),
+.mat-header-cell:nth-child(6){
+  flex: 0 0 8%;
+}
+
+.mat-cell:nth-child(7),
+.mat-header-cell:nth-child(7){
+  flex: 0 0 8%;
+}
+
+.mat-cell:nth-child(8),
+.mat-header-cell:nth-child(8){
+  flex: 0 0 8%;
+}
+
+.mat-cell:nth-child(9),
+.mat-header-cell:nth-child(9){
+  flex: 0 0 3%;
+}
+
+.mat-cell:nth-child(10),
+.mat-header-cell:nth-child(10){
+  flex: 0 0 9%;
+}
+
+
+
+// ruf-banner-brand{
+//     background-color: white;
+//     padding-left: 25px;
+//     padding-bottom: 25px;
+//     padding-top: 25px;
+// }
+
+
+
+
+// ngx-datatable{
+//   width: 800px;
+//   margin-left: 15px;
+//   margin-right: 15px;
+//   height: 70vh;
+// }
+
+
+// .size{
+//   width: 400px;
+// }
+
+// .flex1{
+//   margin-left: 25px;
+//   margin-right: 10px;
+// }
+
+// .notifCard{
+//   margin-right: 25px;
+// }
+/*
+
+
+.notifCard{
+  max-width: 50vh;
+}
+*/
+.chartCard{
+  margin-left: 10px;
+  margin-right: 10px;
+  height: calc(70vh + 4px);
+
+  
+}
+
+ngx-datatable{
+  height: 60vh;
+  max-height: 60vh;
+}
+
+
+.menuNotif{
+  line-height: 15px;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  height: auto;
+  font-size: 12px;
+
+}
+
+
+// ::ng-deep button.mat-menu-item {
+//   -webkit-user-select: none;
+//   -moz-user-select: none;
+//   -ms-user-select: none;
+//   user-select: none;
+//   cursor: pointer;
+//   outline: 0;
+//   border: none;
+//   -webkit-tap-highlight-color: transparent;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   display: block;
+//   /** set line height to desired height */
+//   line-height: 50px;
+//   /** set height to auto */
+//   height: auto;
+//   padding: 0 16px;
+//   text-align: left;
+//   text-decoration: none;
+//   max-width: 100%;
+//   position: relative;
+// }
+
+
+// ::ng-deep div.mat-menu-panel {
+//   min-width: 112px;
+//     /** set width to 500px */
+//   max-width: 500px;
+//   overflow: auto;
+//   -webkit-overflow-scrolling: touch;
+//   max-height: calc(100vh - 48px);
+//   border-radius: 4px;
+//   outline: 0;
+// }
+

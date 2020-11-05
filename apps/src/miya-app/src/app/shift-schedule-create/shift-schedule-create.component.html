@@ -1,0 +1,93 @@
+
+
+
+<div rufId>
+        <ruf-banner rufId="banner_color">
+            <ruf-banner-brand [title]="title" [showLogo]="showLogo"></ruf-banner-brand>
+            <ruf-menubar rufBannerControls>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                          <mat-icon style="padding-top: 5px;">more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu" fisStyle>
+                            <button mat-menu-item>
+                                <mat-icon>account_circle</mat-icon>
+                                <span>My Profile</span>
+                            </button>
+                            <button mat-menu-item mat-menu-item (click)="logout()">
+                                <mat-icon>exit_to_app</mat-icon>
+                                <span>Logout</span>
+                            </button>
+                          </mat-menu>
+            </ruf-menubar>
+        </ruf-banner>
+</div>
+
+
+
+<ruf-card rufId="simpleCard">
+              
+    <form class="example-form" [formGroup]="newShiftForm" (ngSubmit)="onSubmit()">
+            <table class="example-full-width tablewidth" cellspacing="">
+                    <mat-card-header>
+                            <mat-card-title>Start a New Shift</mat-card-title>
+                    </mat-card-header>
+                    <hr>
+                <tr>
+                    <td>
+                        <mat-form-field fisStyle>
+                            <mat-label>Start Date</mat-label>
+                                <input matInput readonly [min]="startDate" [matDatepicker]="startpicker" formControlName="startDate" (dateChange)="onStartDateChange()" required>
+                                    <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #startpicker [disabled]="false"></mat-datepicker>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field fisStyle>
+                            <mat-label>Start Time</mat-label> 
+                                <input matInput type="time" formControlName="startTime" (change)="onStartTimeChange()" required>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field fisStyle>
+                            <mat-label>End Date</mat-label>
+                                <input matInput readonly [min]="startDate" [matDatepicker]="endpicker" formControlName="endDate" (dateChange)="onEndDateTimeChange()" required>
+                                    <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #endpicker [disabled]="false"></mat-datepicker>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field fisStyle>
+                            <mat-label>End Time</mat-label>
+                                <input matInput type="time" formControlName="endTime" (change)="onEndDateTimeChange()" required>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr *ngIf="false">
+                    <td>
+                        <mat-form-field fisStyle >
+                            <mat-label>Allowed Breaks (in seconds)</mat-label>
+                                <input matInput readonly type="number" formControlName="allowedBreaks">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">
+                        Allowed breaks: {{allowedBreaks}} minutes
+                        <button mat-button color="primary" type="submit" [disabled]="submitBtnDisabled" fisStyle>Proceed</button>
+                    </td>
+                </tr>
+        </table>
+    </form>
+</ruf-card>
+
+
+
+
+        
+        

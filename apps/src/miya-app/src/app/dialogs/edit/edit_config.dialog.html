@@ -1,0 +1,115 @@
+<div class="container">
+  <h3 mat-dialog-title>Code ID: {{data.code_id}}</h3>
+
+  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Code ID" [(ngModel)]="data.code_id" name="code_id" disabled required >
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+	
+	<div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Code Name" [(ngModel)]="data.code_name" name="code_name" required >
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+	
+	<div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Description" [(ngModel)]="data.desc" name="desc" required >
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+	
+	
+	<div class="form">
+		<mat-form-field fisStyle>
+			<mat-select class="form-control" placeholder="Category" [(ngModel)]="data.category" name="category" required>
+				<mat-option *ngFor="let category of categories" [value]="category">
+				  {{ category }}
+				</mat-option>
+			</mat-select>
+			<mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+		</mat-form-field>
+    </div>
+	
+	<div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Value 1" [(ngModel)]="data.value_1" name="value_1"  >
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+	
+	<div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Value 2" [(ngModel)]="data.value_2" name="value_2"  >
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+	
+	<div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Value 3" [(ngModel)]="data.value_3" name="value_3"  >
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+	
+	<div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Value 4" [(ngModel)]="data.value_4" name="value_4"  >
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+	
+	<div class="form">
+		<mat-form-field fisStyle>
+			<mat-label>Date Created</mat-label>
+				<input matInput #input class="form-control" [matDatepicker]="date_created" placeholder="Date Created" [(ngModel)]="data.date_created" name="date_created" disabled >
+					<mat-datepicker-toggle matSuffix [for]="date_created"></mat-datepicker-toggle>
+					<mat-datepicker #date_created></mat-datepicker>
+		</mat-form-field>
+    </div>
+	
+	<div class="form">
+		<mat-form-field fisStyle>
+			<mat-label>Date Last Updated</mat-label>
+				<input matInput #input class="form-control" [matDatepicker]="date_last_updated" placeholder="Date Last Updated" [(ngModel)]="data.date_last_updated" name="date_last_updated" disabled >
+					<mat-datepicker-toggle matSuffix [for]="date_last_updated"></mat-datepicker-toggle>
+					<mat-datepicker #date_last_updated></mat-datepicker>
+		</mat-form-field>
+    </div>
+	
+	<div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Created By" [(ngModel)]="data.created_by" name="created_by" disabled  >
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+	
+	<div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Last Updated By" [(ngModel)]="data.last_updated_by" name="last_updated_by" disabled  >
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+		
+	<div class="form">
+		<mat-form-field fisStyle>
+			<mat-select class="form-control" placeholder="Is Active" [(ngModel)]="data.is_active" name="is_active" required>
+				<mat-option value="Y">Yes</mat-option>
+				<mat-option value="N">No</mat-option>
+			</mat-select>
+			<mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+		</mat-form-field>
+    </div>
+	
+	
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()">Save</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
+  </form>
+</div>

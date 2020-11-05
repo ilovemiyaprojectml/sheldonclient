@@ -1,0 +1,55 @@
+
+
+<h1 mat-dialog-title>Employee Dashboard View</h1>
+
+    <table style="width: 100%;">
+        <tr>
+            <td style="text-align: left;">
+                <span>Employee Name: {{ data.name }} ({{ data.eid }})</span>
+                
+            </td>
+            <td style="text-align: right;">
+                <span>
+                    <button mat-icon-button title="Previous" (click)="backShift()" [disabled]="selectedShiftSchedId==minShiftSchedId">
+	                    <mat-icon>keyboard_arrow_left</mat-icon>
+                    </button>
+                    <button mat-icon-button title="Next" (click)="forwardShift()" [disabled]="selectedShiftSchedId==currentShiftSchedId"> 
+	                    <mat-icon>keyboard_arrow_right</mat-icon>
+	                </button>
+                    <button mat-icon-button title="Refresh" (click)="refreshShiftNotif()" [disabled]="selectedShiftSchedId!=currentShiftSchedId">
+	                    <mat-icon>refresh</mat-icon>
+	                </button>
+                </span>
+            </td>
+        </tr>
+    </table>
+
+
+
+<div mat-dialog-content>
+
+    <span *ngIf="isPrevious" style="color: red;">No current active shift. Show latest existing shift instead.</span>
+
+    <ngx-datatable class="material" [columnMode]="'standard'" [rows]="viewEmpRows"
+                        [footerHeight]="0"
+                        [rowHeight]="50"
+                        [headerHeight]="50"
+                        [scrollbarV]="false"
+                        style="border-style: solid; height: 60vh; overflow-y: visible;">
+                        <ngx-datatable-column name="Date" [width]="200" [sortable]="false"></ngx-datatable-column>
+                        <ngx-datatable-column name="Time" [width]="200" [sortable]="false"></ngx-datatable-column>
+                        <ngx-datatable-column name="Status" [width]="200" [sortable]="false"></ngx-datatable-column>
+                        <ngx-datatable-column name="Reason" [width]="325" [sortable]="false"></ngx-datatable-column>
+    </ngx-datatable>
+</div>
+<div mat-dialog-actions style="justify-content: flex-end;">
+    
+    <button mat-button (click)="closeDialog()">Close</button>
+</div>
+
+
+
+
+
+
+

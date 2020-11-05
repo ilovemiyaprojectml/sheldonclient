@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import 'node_modules/@ruf/theming/styles/theming/theming';
+@import 'node_modules/@ruf/ngx-datatable/styles/all-theme.scss';
+@import 'node_modules/@ruf/ngx-datatable/styles/_ngx-datatable.structure.scss';
+
+mat-form-field{
+    width: 400px;
+}
+
+/* This is a hack though but it works with our login page. This is to add a background on a component */
+img{
+    position: fixed;
+    z-index: 0;
+    min-width: 100%;
+    min-height: 100%;
+    left: 0;
+    top: 0;
+    height: 1vh; 
+}
+
+ruf-card{
+    height: 81vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.95;
+    max-width: 100%;
+  }
+
+table{
+    margin-left: 5vh;
+    margin-right: 5vh;
+    margin-bottom: 5vh;
+}
+
+
+.mat-dialog-container {
+    display: block;
+    padding: 24px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    overflow: auto;
+    outline: 0;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    max-height: inherit;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+
+
+
+
+
+.like-anchor {
+  align-items: normal;
+  background-color: rgba(0,0,0,0);
+  border-color: rgb(0, 0, 238);
+  border-style: none;
+  box-sizing: content-box;
+  color: rgb(0, 0, 238); 
+  cursor: pointer;
+  display: inline;
+  font: inherit;
+  height: auto;
+  padding: 0;
+  perspective-origin: 0 0;
+  text-align: start;
+  text-decoration: underline;
+  transform-origin: 0 0;
+  width: auto;
+  outline: 1 solid red;
+  -moz-appearance: none;
+  -webkit-logical-height: 1em;
+  -webkit-logical-width: auto;
+}
+
+@supports (-moz-appearance:none) { 
+  .like-anchor::-moz-focus-inner {
+    border: none;
+    padding: 0;
+  }
+
+  .like-anchor:focus {
+    outline-style: dotted;
+    outline-width: 1px;
+  }
+}
+
+
+
+
+
+
