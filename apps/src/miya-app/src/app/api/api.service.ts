@@ -16,7 +16,8 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class ApiService{
-    API_URL = "http://localhost:8081/api"; 
+    //API_URL = "http://localhost:8081/api"; 
+    API_URL = "https://sheldontestserver.azurewebsites.net/api"; 
 
     constructor(private httpClient: HttpClient){ 
     
