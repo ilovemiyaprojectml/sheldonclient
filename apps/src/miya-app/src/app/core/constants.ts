@@ -7,5 +7,5 @@
 */
 
 export const constants = {
-    API_URL = "https://sheldontestserver.azurewebsites.net/api"
+    API_URL: "https://sheldontestserver.azurewebsites.net/api"
 };
