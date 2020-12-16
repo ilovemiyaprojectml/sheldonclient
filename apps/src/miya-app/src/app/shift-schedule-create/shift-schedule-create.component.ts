@@ -158,8 +158,7 @@ export class ShiftScheduleCreateComponent implements OnInit {
                 this.logger.debug("Routing to user-dashboard");
                 this.router.navigate(['/user-dashboard']); 
               }
-          }
-        )
+          });
         }
       }
     );
@@ -291,7 +290,6 @@ export class ShiftScheduleCreateComponent implements OnInit {
   //This returns values in minutes format
   getAllowedBreaks(hoursShift) {
     this.logger.debug("getAllowedBreaks - Start");
-
     var sysAllowedBreakTimes = JSON.parse(this.cookieService.get('allowedBreakTimes'));
 
     var numDays = 0;
@@ -315,13 +313,19 @@ export class ShiftScheduleCreateComponent implements OnInit {
     var additionalBreaks = numDays * minBreakFor1Day;
     allowedBreaks = additionalBreaks + allowedBreaks;
 
-    this.logger.debug("onEndDateTimeChange - End");
+    this.logger.debug("getAllowedBreaks - End");
     return allowedBreaks;
   }
 
   setSystemAllowedBreaks(): void{
-    console.log("setSystemAllowedBreaks.........");
-    console.log(this.newShiftService.getSysAllowedBreaks());
+    this.logger.debug("setSystemAllowedBreaks - Start");
+    this.newShiftService.getSysAllowedBreaks()
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.logger.debug("system allowed breaks fetched.");
+      });
+    this.logger.debug("setSystemAllowedBreaks - Start");
   }
 
 }

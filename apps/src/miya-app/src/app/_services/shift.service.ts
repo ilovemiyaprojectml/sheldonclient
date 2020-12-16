@@ -188,11 +188,8 @@ export class ShiftService {
   }
 
   getSysAllowedBreaks(){ 
-    console.log("getSysAllowedBreaks....");
     return this.http.get<any>(`${constants.API_URL}/getAllowedBreakTime`)
       .pipe(map(allowedBreakTimes =>{
-        console.log("-------allowedBreakTimes-------");
-        console.log(allowedBreakTimes);
         if(allowedBreakTimes){
           // save that allowedBreakTimes on a cookie
           this.cookieService.set('allowedBreakTimes', JSON.stringify(allowedBreakTimes));
